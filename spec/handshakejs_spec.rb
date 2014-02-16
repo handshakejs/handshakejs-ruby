@@ -1,24 +1,61 @@
 require 'spec_helper'
 
 describe Handshakejs do
-  subject { Handshakejs }
-
   describe "defaults" do
     before do
-      subject.salt         = nil
+      Handshakejs.salt         = nil
     end
 
-    it { subject.salt.should eq "salt_required" }
-    it { subject::VERSION.should eq "0.0.1" }
+    it { Handshakejs.salt.should eq "salt_required" }
+    it { Handshakejs::VERSION.should eq "0.0.1" }
+    it { Handshakejs.iterations.should eq 1000 }
+    it { Handshakejs.key_length.should eq 16 }
   end
 
   describe "setting values" do
     let(:salt)     { "adf3434938492fjkdfj" }
 
     before do
-      subject.salt     = salt
+      Handshakejs.salt     = salt
     end
 
-    it { subject.salt.should eq salt }
+    it { Handshakejs.salt.should eq salt }
+  end
+
+  describe "#validate" do
+    let(:salt)  { "1234" }
+    let(:email) { "scott@mailinator.com" }
+    let(:hash)  { "852874208fc66f6c404b6150e2bf3fba" }
+
+    before do
+      Handshakejs.salt = salt
+    end
+
+    it "is valid against against a correct email, hash combination" do
+      result = Handshakejs.validate({email: email, hash: hash})
+
+      result.should be_true 
+    end
+
+    it "is invalid against against an incorrect email" do
+      email   = "different@email.com"
+      result  = Handshakejs.validate({email: email, hash: hash})
+
+      result.should be_false 
+    end
+
+    it "is invalid against against an incorrect hash" do
+      hash    = "differenthash"
+      result  = Handshakejs.validate({email: email, hash: hash})
+
+      result.should be_false 
+    end
+
+    it "is invalid against against a different salt" do
+      Handshakejs.salt = "different"
+      result  = Handshakejs.validate({email: email, hash: hash})
+
+      result.should be_false 
+    end
   end
 end
