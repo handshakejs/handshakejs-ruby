@@ -46,11 +46,6 @@ module Handshakejs
       p.hash_function = "sha1"
     end
 
-    puts pbkdf2.hex_string
-
     params[:hash] == pbkdf2.hex_string 
-
-    #pbkdf2  = PBKDF2.new(:password=>params[:email], :salt=>Hanshakejs.salt, :iterations=>1000, :key_length => 16, :hash_function => "sha1")
-    #session[:user] = params[:email] if pbkdf2.hex_string == params[:hash]
   end
 end
