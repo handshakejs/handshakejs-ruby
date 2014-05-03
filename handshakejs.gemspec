@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Rubygem for Handshakejs session check.}
   gem.homepage      = "http://github.com/scottmotte/handshakejs-ruby"
 
-  gem.add_dependency "pbkdf2", "0.1.0"
+  gem.add_dependency "armor", "0.0.3"
   
   gem.add_development_dependency "foreman"
   gem.add_development_dependency "pry"

@@ -1,4 +1,4 @@
-require "pbkdf2"
+require "armor"
 require "handshakejs/version"
 
 module Handshakejs
@@ -37,15 +37,26 @@ module Handshakejs
     16
   end
 
-  def validate(params={})
-    pbkdf2 = PBKDF2.new do |p| 
-      p.password      = params[:email] 
-      p.salt          = Handshakejs.salt 
-      p.iterations    = Handshakejs.iterations
-      p.key_length    = Handshakejs.key_length
-      p.hash_function = "sha1"
-    end
+  def hash_function=(hash_function)
+    @hash_function = hash_function
 
-    params[:hash] == pbkdf2.hex_string 
+    @hash_function
+  end
+
+  def hash_function
+    return @hash_function if @hash_function
+    "sha1"
+  end
+
+  def digest
+    Armor::Digest.new(hash_function)
+  end
+
+  def validate(params={})
+    password  = params[:email]
+
+    result    = Armor.hex(Armor.pbkdf2(digest, password, salt, Integer(iterations), key_length))
+
+    params[:hash] == result
   end
 end
