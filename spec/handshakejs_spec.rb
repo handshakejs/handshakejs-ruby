@@ -32,28 +32,28 @@ describe Handshakejs do
     end
 
     it "is valid against against a correct email, hash combination" do
-      result = Handshakejs.validate({email: email, hash: hash})
+      result = Handshakejs.validate({:email => email, :hash => hash})
 
       result.should be_true 
     end
 
     it "is invalid against against an incorrect email" do
       email   = "different@email.com"
-      result  = Handshakejs.validate({email: email, hash: hash})
+      result  = Handshakejs.validate({:email => email, :hash => hash})
 
       result.should be_false 
     end
 
     it "is invalid against against an incorrect hash" do
       hash    = "differenthash"
-      result  = Handshakejs.validate({email: email, hash: hash})
+      result  = Handshakejs.validate({:email => email, :hash => hash})
 
       result.should be_false 
     end
 
     it "is invalid against against a different salt" do
       Handshakejs.salt = "different"
-      result  = Handshakejs.validate({email: email, hash: hash})
+      result  = Handshakejs.validate({:email => email, :hash => hash})
 
       result.should be_false 
     end
