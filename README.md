@@ -22,7 +22,7 @@ You first need to request access from [scottmotte](http://github.com/scottmotte)
 
 ```
 gem build handshakejs.gemspec
-gem push handshakejs-0.0.1.gem
+gem push handshakejs-0.0.2.gem
 ```
 
 

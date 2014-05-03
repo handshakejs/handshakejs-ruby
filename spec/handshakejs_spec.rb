@@ -7,7 +7,7 @@ describe Handshakejs do
     end
 
     it { Handshakejs.salt.should eq "salt_required" }
-    it { Handshakejs::VERSION.should eq "0.0.1" }
+    it { Handshakejs::VERSION.should eq "0.0.2" }
     it { Handshakejs.iterations.should eq 1000 }
     it { Handshakejs.key_length.should eq 16 }
     it { Handshakejs.hash_function.should eq "sha1" }
