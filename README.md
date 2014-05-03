@@ -7,7 +7,7 @@ Makes interacting with handshakejs easier in ruby.
 
 ```ruby
 Handshakejs.salt = "your_long_secret_salt"
-Handshakejs.validate({email: email, hash: hash})
+Handshakejs.validate({:email => email, :hash => hash})
 ```
 
 ## Running Specs
